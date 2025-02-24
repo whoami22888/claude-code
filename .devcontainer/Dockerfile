@@ -66,8 +66,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -x
 
 # Install Claude
-# TODO(ben): Add this back in when we have a public release
-# RUN npm install -g @anthropic-ai/claude-code
+RUN npm install -g @anthropic-ai/claude-code
 
 # Copy and set up firewall script
 COPY init-firewall.sh /usr/local/bin/
