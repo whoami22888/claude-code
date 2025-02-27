@@ -42,9 +42,10 @@ RUN mkdir -p /workspace /home/node/.claude && \
 
 WORKDIR /workspace
 
-RUN wget https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_arm64.deb && \
-  sudo dpkg -i git-delta_0.18.2_arm64.deb && \
-  rm git-delta_0.18.2_arm64.deb
+RUN ARCH=$(dpkg --print-architecture) && \
+  wget "https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_${ARCH}.deb" && \
+  sudo dpkg -i "git-delta_0.18.2_${ARCH}.deb" && \
+  rm "git-delta_0.18.2_${ARCH}.deb"
 
 # Set up non-root user
 USER node
