@@ -17,12 +17,21 @@ Some of its key capabilities include:
 
 ## Get started
 
-1. Run the following command in your terminal: <br />
-  ```sh
-  npm install -g @anthropic-ai/claude-code
-  ```
-2. Navigate to your project directory and run <code>claude</code>
-3. Complete the one-time OAuth process with your Anthropic Console account.
+1. If you are new to Node.js and Node Package Manager (`npm`), then it is recommended that you configure an NPM prefix for your user.
+   Instructions on how to do this can be found [here](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview#recommended-create-a-new-user-writable-npm-prefix).
+
+   *Important* We recommend installing this package as a non-privileged user, not as an administrative user like `root`.
+   Installing as a non-privileged user helps maintain your system's security and stability.
+
+2. Install Claude Code:
+   
+   ```sh
+   npm install -g @anthropic-ai/claude-code
+   ```
+
+3. Navigate to your project directory and run <code>claude</code>.
+
+4. Complete the one-time OAuth process with your Anthropic Console account.
 
 ### Research Preview
 
