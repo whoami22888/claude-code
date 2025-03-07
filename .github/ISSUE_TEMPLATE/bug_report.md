@@ -14,6 +14,7 @@ assignees: ''
   - [ ] Other: <!-- specify -->
 - Claude CLI version: <!-- output of `claude --version` -->
 - Operating System: <!-- e.g. macOS 14.3, Windows 11, Ubuntu 22.04 -->
+- Terminal:  <!-- e.g. iTerm2, Terminal App -->
 
 ## Bug Description
 <!-- A clear and concise description of the bug -->
