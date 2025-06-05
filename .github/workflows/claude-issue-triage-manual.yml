@@ -1,0 +1,46 @@
+name: Claude Issue Triage Manual
+description: "Manually triage GitHub issues using Claude Code"
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_numbers:
+        description: 'Comma-separated list of issue numbers to triage (e.g., 123,456,789)'
+        required: true
+        type: string
+
+jobs:
+  parse-issues:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Parse issue numbers
+        id: set-matrix
+        run: |
+          # Remove spaces and convert to JSON array
+          CLEANED=$(echo "${{ github.event.inputs.issue_numbers }}" | tr -d ' ')
+          IFS=',' read -ra ISSUES <<< "$CLEANED"
+          MATRIX_JSON=$(printf '%s\n' "${ISSUES[@]}" | jq -R . | jq -s -c '{issue: .}')
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+
+  triage-issue:
+    needs: parse-issues
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    strategy:
+      matrix: ${{ fromJson(needs.parse-issues.outputs.matrix) }}
+      max-parallel: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+
+      - name: Run Claude Issue Triage
+        uses: ./.github/actions/claude-issue-triage-action
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          issue_number: ${{ matrix.issue }}
